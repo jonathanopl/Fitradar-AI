@@ -62,13 +62,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 # 🤖 AI Deteksi Makanan - FitRadar AI
 
-Sistem ini digunakan untuk mendeteksi jenis makanan dari gambar menggunakan model YOLOv8 yang telah dilatih, dan mengembalikan hasil deteksi beserta informasi gizinya.
+Sistem ini digunakan untuk mendeteksi jenis makanan melalui foto/gambar yang telah dilatih, dan mengembalikan hasil deteksi beserta informasi gizinya.
 
 ---
 
 ## 🚀 Cara Menjalankan
 
-### 1. Aktifkan virtual environment untuk menjalankan
+### 1. Aktifkan virtual environment untuk menjalankan ai deteksi
+cd ai\deteksi
 ```bash
 # PADA WINDOWS
 venv\Scripts\activate
@@ -76,3 +77,23 @@ venv\Scripts\activate
 source venv/bin/activate
 # Setelah venv nyala
 jalankan ai-deteksi di terminal = uvicorn app:app --host 127.0.0.1 --port 8001 --reload
+
+### 2. Aktifkan virtual environment untuk menjalankan rekomendasi makanan
+cd ai\rekomendasi_makanan
+```bash
+# PADA WINDOWS
+venv\Scripts\activate
+# PADA LINUX / MAC
+source venv/bin/activate
+# Setelah venv nyala
+jalankan ai-rekomendasi_makanan di terminal = uvicorn main:app --reload --port 5001
+
+### 3. Aktifkan virtual environment untuk menjalankan rekomendasi olahraga
+cd C:\xampp\htdocs\Fitradar-AI\ai\rekomendasi_olahraga
+```bash
+# PADA WINDOWS
+venv\Scripts\activate
+# PADA LINUX / MAC
+source venv/bin/activate
+# Setelah venv nyala
+jalankan ai-rekomendasi_makanan di terminal = python app.py

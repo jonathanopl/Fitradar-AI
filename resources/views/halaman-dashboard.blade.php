@@ -159,7 +159,7 @@
         const totalPerubahan = Math.abs(beratTarget - beratAwal);
         const sudahBerubah = Math.abs(beratSekarang - beratAwal);
 
-        let progress = (sudahBerubah / totalPerubahan) * 100;
+    let progress = (sudahBerubah / totalPerubahan) * 100;
         if (progress > 100) progress = 100;
 
         progressBar.style.width = progress + '%';

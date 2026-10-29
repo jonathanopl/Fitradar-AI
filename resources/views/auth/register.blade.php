@@ -16,7 +16,7 @@
             {{-- Name --}}
             <div>
                 <input type="text" name="name" id="name" placeholder="Nama Lengkap"
-                    class="w-full px-4 py-2 border border-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    class="w-full max-w-sm px-4 py-2 border border-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     :value="old('name')" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
             </div>

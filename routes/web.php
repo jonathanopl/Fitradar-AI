@@ -56,8 +56,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // ✅ Halaman Profil (utama untuk user)
 // -----------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/halaman-profil', [ProfileController::class, 'edit'])->name('halaman-profil');
-    Route::post('/halaman-profil', [ProfileController::class, 'store'])->name('halaman-profil.store');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -69,6 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/deteksi', fn () => view('deteksi'))->name('deteksi');
     Route::post('/simpan-hasil-deteksi', [VisionAIController::class, 'simpanHasilDeteksi'])->name('simpan-hasil-deteksi');
     Route::get('/halaman-makanan', [RekomendasiMakananController::class, 'tampilkanRekomendasi'])->name('halaman-makanan');
+    Route::post('/ganti-makanan/{waktu}', [RekomendasiMakananController::class, 'gantiMakanan'])->name('ganti.makanan');
     Route::get('/halaman-olahraga', [HalamanOlahragaController::class, 'index'])->name('halaman-olahraga');
 });
 

@@ -2,62 +2,105 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HealthData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\HealthData;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IsiProfilController extends Controller
 {
-    public function index()
+    public function showProfil()
     {
-        // Ambil data kesehatan pengguna jika ada
-        $healthData = Auth::user()->healthData()->first();
-        return view('halaman-profil', compact('healthData'));
+        $user = Auth::user();
+        $healthData = HealthData::where('user_id', $user->id)->first();
+        return view('halaman-profil', compact('user', 'healthData'));
     }
 
-    public function update(Request $request)
+    public function store(Request $request)
     {
-        // Validasi hanya nama yang wajib diisi
         $validated = $request->validate([
-            'name'   => 'required|string|max:255',
-            'day'    => 'nullable|integer|min:1|max:31',
-            'month'  => 'nullable|integer|min:1|max:12',
-            'year'   => 'nullable|integer|min:1950|max:' . date('Y'),
-            'height' => 'nullable|numeric|min:0',
-            'weight' => 'nullable|numeric|min:0',
+            'name' => 'required|string|max:255',
+            'gender' => 'required|string|in:male,female',
+            'day' => 'required|numeric|min:1|max:31',
+            'month' => 'required|numeric|min:1|max:12',
+            'year' => 'required|numeric|min:1900|max:' . date('Y'),
+            'height' => 'required|numeric|min:50|max:300',
+            'weight' => 'required|numeric|min:20|max:300',
+            'activity_level' => 'required|string|in:low,moderate,high'
         ]);
 
-        // Simpan perubahan nama ke tabel users
+        $birthdate = sprintf('%04d-%02d-%02d', $validated['year'], $validated['month'], $validated['day']);
+        $height = $validated['height'];
+        $weight = $validated['weight'];
+        $bmi = round($weight / pow($height / 100, 2), 2);
+
+        HealthData::updateOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'name' => $validated['name'],
+                'gender' => $validated['gender'] == 'male' ? 'Male' : 'Female',
+                'birthdate' => $birthdate,
+                'height' => $height,
+                'weight' => $weight,
+                'bmi' => $bmi,
+                'activity_level' => $validated['activity_level'],
+            ]
+        );
+
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $user->name = $validated['name'];
         $user->save();
 
-        // Opsional: Tetap simpan data tambahan jika tersedia
-        $day    = $validated['day'] ?? null;
-        $month  = $validated['month'] ?? null;
-        $year   = $validated['year'] ?? null;
-        $height = $validated['height'] ?? null;
-        $weight = $validated['weight'] ?? null;
+        return redirect()->route('halaman-selanjutnya')->with('success', 'Profil berhasil disimpan');
+    }
 
-        $birthdate = ($day && $month && $year)
-            ? sprintf('%04d-%02d-%02d', $year, $month, $day)
-            : null;
+    public function update(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'gender' => 'required|string|in:male,female',
+                'day' => 'required|numeric|min:1|max:31',
+                'month' => 'required|numeric|min:1|max:12',
+                'year' => 'required|numeric|min:1900|max:' . date('Y'),
+                'height' => 'required|numeric|min:50|max:300',
+                'weight' => 'required|numeric|min:20|max:300',
+            ]);
 
-        // Simpan data ke tabel health_data jika ada input
-        if ($birthdate || $height || $weight) {
-            $health = $user->healthData()->firstOrNew(['user_id' => $user->id]);
-            $health->birthdate = $birthdate;
-            $health->height    = $height;
-            $health->weight    = $weight;
+            $birthdate = sprintf('%04d-%02d-%02d', $validated['year'], $validated['month'], $validated['day']);
+            $height = $validated['height'];
+            $weight = $validated['weight'];
+            $bmi = round($weight / pow($height / 100, 2), 2);
 
-            if ($height && $weight) {
-                $health->bmi = round($weight / (($height / 100) ** 2), 2);
-            }
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
 
-            $health->save();
+            /** @var \App\Models\HealthData $healthData */
+            $healthData = HealthData::where('user_id', $user->id)->firstOrFail();
+
+            DB::transaction(function () use ($validated, $birthdate, $height, $weight, $bmi, $user, $healthData) {
+                $healthData->update([
+                    'name' => $validated['name'],
+                    'gender' => $validated['gender'] == 'male' ? 'Male' : 'Female',
+                    'birthdate' => $birthdate,
+                    'height' => $height,
+                    'weight' => $weight,
+                    'bmi' => $bmi,
+                ]);
+
+                $user->name = $validated['name'];
+                $user->save();
+            });
+
+            return redirect()->back()->with('success', 'Profil berhasil diperbarui');
+        } catch (\Exception $e) {
+            Log::error('Error updating profile: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat memperbarui profil. Silakan coba lagi.')
+                ->withInput();
         }
-
-        return redirect()->route('halaman-profil')
-                         ->with('success', 'Nama berhasil diperbarui. Data lain tetap ditampilkan tetapi tidak wajib diubah.');
     }
 }

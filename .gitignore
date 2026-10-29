@@ -40,3 +40,14 @@ ai/deteksi/*.bak
 # - ai/deteksi/best.pt
 # - ai/deteksi/food_nutrition_dataset_full.csv
 # No need to whitelist, just don’t ignore "*.pt" or "*.csv"
+# Python venv & cache
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+
+# Backup lokal
+Backup-Fitradar/
+
+# Model olahraga terlalu besar untuk GitHub (>100 MB)
+ai/rekomendasi_olahraga/models/model_rekomendasi_olahraga (1).pkl

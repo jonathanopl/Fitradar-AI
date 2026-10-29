@@ -7,7 +7,6 @@
     <title>Tentang Fitradar AI - FITRADAR AI - Health & Fitness</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
     <style>
-        /* ... CSS yang sudah ada ... */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -31,6 +30,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo-container {
@@ -86,18 +86,29 @@
             background-color: #bbb;
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         .hero {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            padding: 3rem 3rem;
+            padding: 3rem;
             background-color: white;
             color: #1E1F9D;
         }
 
         .hero .text {
             max-width: 400px;
+            flex: 1;
+            min-width: 300px;
         }
 
         .hero h1 {
@@ -129,6 +140,8 @@
 
         .hero img {
             height: 400px;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         .green-bar {
@@ -154,12 +167,16 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .feature {
             width: 300px;
             text-align: center;
+            flex: 1;
+            min-width: 250px;
         }
 
         .feature img {
@@ -240,7 +257,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-           
         }
 
         .footer .footer-logo-text img {
@@ -259,7 +275,7 @@
         }
 
         .video-section {
-            background-color: ##1E1F9D;
+            background-color: #1E1F9D;
             padding: 3rem 2rem;
             text-align: center;
             color: #ffffff;
@@ -286,6 +302,224 @@
             border: none;
             outline: none;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo-container .footer-logo-text .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-container .footer-logo-text img {
+                height: 40px;
+            }
+
+            .menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1E1F9D;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+                gap: 2rem;
+            }
+
+            .hero .text {
+                max-width: 100%;
+                order: 2;
+            }
+
+            .hero img {
+                height: 250px;
+                order: 1;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .feature {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .about-container {
+                padding: 40px 20px;
+                background-attachment: scroll;
+            }
+
+            .about-container h1 {
+                font-size: 1.8rem;
+            }
+
+            .about-container p {
+                font-size: 0.9rem;
+            }
+
+            .video-section {
+                padding: 2rem 1rem;
+            }
+
+            .video-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.8rem;
+            }
+
+            .logo-container .footer-logo-text .logo-text {
+                font-size: 1rem;
+            }
+
+            .logo-container .footer-logo-text img {
+                height: 35px;
+            }
+
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.85rem;
+            }
+
+            .hero button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .hero img {
+                height: 200px;
+            }
+
+            .section {
+                padding: 1.5rem 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.3rem;
+            }
+
+            .feature h3 {
+                font-size: 0.9rem;
+            }
+
+            .feature p {
+                font-size: 0.75rem;
+            }
+
+            .about-container {
+                padding: 30px 15px;
+            }
+
+            .about-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .about-container p {
+                font-size: 0.8rem;
+            }
+
+            .video-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .video-title {
+                font-size: 1.3rem;
+            }
+
+            .footer .footer-logo-text img {
+                height: 40px;
+            }
+
+            .footer p {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* Tablet landscape */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero {
+                padding: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero img {
+                height: 350px;
+            }
+
+            .features {
+                gap: 1.5rem;
+            }
+
+            .feature {
+                width: 280px;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .hero {
+                padding: 4rem 5rem;
+            }
+
+            .section {
+                padding: 4rem 3rem;
+            }
+
+            .about-container {
+                padding: 80px 60px;
+            }
+        }
     </style>
 </head>
 
@@ -298,10 +532,11 @@
             </div>
         </div>
 
-        <div class="menu">
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        
+        <div class="menu" id="mobileMenu">
             <a href="#tentang">Tentang kami</a>
-            <button onclick="window.location.href='{{ route('login') }}'">Masuk</button>
-
+            <button onclick="window.location.href='/login'">Masuk</button>
         </div>
     </div>
 
@@ -312,7 +547,7 @@
             <h1>Sehatmu</h1>
             <p>Ingin kendalikan pola makanmu? Lacak makananmu, pahami kebiasaanmu, dan capai tujuanmu dengan mudah
                 bersama kami.</p>
-            <button id="mulaiButton">Mulai</button>
+            <button onclick="window.location.href='/register'">Mulai</button>
         </div>
         <img src="/images/run.png" alt="Ilustrasi Lari" />
     </div>
@@ -351,7 +586,7 @@
 
     <div class="about-container" id="tentang">
         <h1>Tentang Fitradar AI</h1>
-        <div class=text-center></div>
+        <div class="text-center"></div>
         <p>Selamat datang di Fitradar AI! Kami dengan antusias mengembangkan Health & Fitness Evaluator AI, sebuah
             aplikasi web inovatif yang dirancang untuk mendukung perjalanan kesehatan Anda...</p>
         <p>Oleh karena itu, kami menciptakan solusi cerdas yang memberikan saran makanan dan olahraga yang disesuaikan
@@ -372,27 +607,25 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mulaiButton = document.getElementById('mulaiButton');
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
 
-            mulaiButton.addEventListener('click', function() {
-                const isUserRegistered = localStorage.getItem('isRegistered');
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
 
-                if (isUserRegistered === 'true') {
-                    window.location.href = '/halaman-dashboard.blade.php';
-                } else {
-                    window.location.href = '/register';
-                }
-            });
-
-            // Tambahan kode untuk simulasi setelah berada di halaman /register
-            if (window.location.pathname === '/register') {
-                // Simulasi proses pendaftaran berhasil setelah berada di halaman /register
-                // Dalam aplikasi nyata, ini akan terjadi setelah pengguna mengisi form dan submit
-                localStorage.setItem('isRegistered', 'true');
-
-                // Redirect ke dashboard setelah "register" (simulasi)
-                window.location.href = '/dashboard.blade.php';
+        // Close mobile menu when window is resized to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.getElementById('mobileMenu').classList.remove('active');
             }
         });
     </script>
